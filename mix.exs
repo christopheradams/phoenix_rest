@@ -19,7 +19,8 @@ defmodule PhoenixRest.Mixfile do
 
   defp deps do
     [{:phoenix, "~> 1.1.0"},
-     {:plug_rest, "~> 0.7.0"}]
+     {:plug_rest, "~> 0.7.0"},
+     {:ex_doc, ">= 0.0.0", only: :dev}]
   end
 
   defp description do
