@@ -1,0 +1,2 @@
+defmodule PhoenixRest do
+end
