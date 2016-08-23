@@ -30,12 +30,6 @@ defmodule PhoenixRest.Router do
 
   See the `PlugRest` documentation for more details about defining a Resource.
 
-  ## Options
-
-  The macro accepts an optional initial state for the resource. For example:
-
-      resource "/pages/:page", PageResource, state: %{option: true}
-
   ## Routes
 
       resource "/hello", HelloResource
@@ -93,6 +87,7 @@ defmodule PhoenixRest.Router do
 
   # Define a function that will be used by the resource macro to
   # generate a match for every resource and known method.
+  @spec defs(Keyword.t) :: Macro.t
   defp defs(options) do
     known_methods =
       Keyword.get(options, :known_methods, @known_methods)
@@ -109,10 +104,35 @@ defmodule PhoenixRest.Router do
     end
   end
 
+  ## Resource
+
+  @doc """
+  Main API to define resource routes.
+
+  It accepts an expression representing the path, the name of a module
+  representing the resource, and a list of options.
+
+  ## Examples
+
+      resource "/pages/:page", PageResource, host: "host1.", state: true
+
+  ## Options
+
+  `resource/3` accepts the following options
+
+    * `:host` - the host which the route should match. Defaults to `nil`,
+      meaning no host match, but can be a string like "example.com" or a
+      string ending with ".", like "subdomain." for a subdomain match.
+
+    * `:state` - the initial state of the resource.
+
+  """
+  @spec resource(String.t, atom(), list()) :: Macro.t
   defmacro resource(path, handler, options \\ []) do
     add_resource(path, handler, options)
   end
 
+  @spec add_resource(String.t, atom(), list()) :: Macro.t
   defp add_resource(path, handler, options) do
     quote bind_quoted: [path: path, handler: handler, options: options] do
       var!(add_resource, PhoenixRest.Router).(path, handler, options)
