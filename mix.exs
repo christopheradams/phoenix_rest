@@ -9,6 +9,7 @@ defmodule PhoenixRest.Mixfile do
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     dialyzer: [plt_add_deps: true],
      docs: [extras: ["README.md"]],
      description: description(),
      package: package(),
@@ -22,6 +23,7 @@ defmodule PhoenixRest.Mixfile do
   defp deps do
     [{:phoenix, "~> 1.1.0"},
      {:plug_rest, "~> 0.7.0"},
+     {:dialyxir, "~> 0.3.5", only: [:dev]},
      {:ex_doc, ">= 0.0.0", only: :dev}]
   end
 
