@@ -1,11 +1,18 @@
 # PhoenixRest
 
+[![Build Status](https://travis-ci.org/christopheradams/phoenix_rest.svg?branch=master)](https://travis-ci.org/christopheradams/phoenix_rest)
+[![Hex Version](https://img.shields.io/hexpm/v/phoenix_rest.svg)](https://hex.pm/packages/phoenix_rest)
+
 Resource routing and REST behaviour for Phoenix web applications.
 
 PhoenixRest integrates the
 [PlugRest](https://github.com/christopheradams/plug_rest) library into
 your Phoenix application by making a new `resource` macro available in
 the existing router.
+
+[Documentation for PhoenixRest is available on hexdocs](http://hexdocs.pm/phoenix_rest/).<br/>
+[Source code is available on Github](https://github.com/christopheradams/phoenix_rest).<br/>
+[Package is available on hex](https://hex.pm/packages/phoenix_rest).
 
 ## Hello World
 
