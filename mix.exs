@@ -22,7 +22,7 @@ defmodule PhoenixRest.Mixfile do
 
   defp deps do
     [{:phoenix, "~> 1.1.0"},
-     {:plug_rest, "~> 0.7.0"},
+     {:plug_rest, "~> 0.8.0"},
      {:dialyxir, "~> 0.3.5", only: [:dev]},
      {:ex_doc, ">= 0.0.0", only: :dev}]
   end
