@@ -89,15 +89,16 @@ defmodule PhoenixRest.Router do
   # generate a match for every resource and known method.
   @spec defs(Keyword.t) :: Macro.t
   defp defs(options) do
-    known_methods =
-      Keyword.get(options, :known_methods, @known_methods)
-      |> Enum.map(&String.downcase/1)
-      |> Enum.map(&String.to_atom/1)
+    known_methods = Keyword.get(options, :known_methods, @known_methods)
 
     quote bind_quoted: [known_methods: known_methods] do
-      var!(add_resource, PhoenixRest.Router) = fn (path, handler, options) ->
+      methods =
+        known_methods
+        |> Enum.map(&String.downcase/1)
+        |> Enum.map(&String.to_atom/1)
 
-        for method <- known_methods do
+      var!(add_resource, PhoenixRest.Router) = fn (path, handler, options) ->
+        for method <- methods do
           match method, path, handler, options
         end
       end
