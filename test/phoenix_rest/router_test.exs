@@ -20,7 +20,7 @@ defmodule PhoenixRest.RouterTest do
   end
 
   defmodule RestRouter do
-    use PhoenixRest.Router, known_methods: ["GET", "HEAD", "OPTIONS", "POST"]
+    use PhoenixRest.Router, known_methods: ["GET", "HEAD", "OPTIONS", "POST", "MOVE"]
 
     resource "/hello", HelloResource
     resource "/hello/:message", MessageResource
@@ -51,6 +51,14 @@ defmodule PhoenixRest.RouterTest do
 
     assert conn.status == 405
     assert (Plug.Conn.get_resp_header(conn, "allow")) == ["HEAD, GET, OPTIONS"]
+  end
+
+  test "MOVE /hello" do
+    conn = conn(:move, "/hello")
+
+    conn = RestRouter.call(conn, [])
+
+    assert conn.status == 405
   end
 
   test "PATCH /hello" do

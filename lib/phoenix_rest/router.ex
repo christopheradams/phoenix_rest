@@ -57,14 +57,10 @@ defmodule PhoenixRest.Router do
     * `:known_methods` - custom list of HTTP methods known by your
       server, for example: `["GET", "HEAD", "OPTIONS", "TRACE"]`
 
-  If a resource allows any HTTP methods that are not in the default
-  set (GET, HEAD, POST, PUT, PATCH, DELETE, and OPTIONS), it must
-  implement the `known_methods` callback which returns a list of all
-  the HTTP verbs your server should know about.
-
-  Because these known methods can only be returned by your resource at
-  runtime, you also need to tell PhoenixRest about them, so that it
-  can compile your routes correctly using the Phoenix match macro:
+  This option will override the default list of methods that each
+  Resource knows about (GET, HEAD, POST, PUT, PATCH, DELETE, and
+  OPTIONS). If any resource allows custom methods, you must define
+  them using this option. For example:
 
       use PhoenixRest.Router, known_methods: ["GET", "HEAD", "OPTIONS", "TRACE"]
 
@@ -98,6 +94,7 @@ defmodule PhoenixRest.Router do
         |> Enum.map(&String.to_atom/1)
 
       var!(add_resource, PhoenixRest.Router) = fn (path, handler, options) ->
+        options = Keyword.put_new(options, :known_methods, known_methods)
         for method <- methods do
           match method, path, handler, options
         end
