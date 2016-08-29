@@ -32,7 +32,7 @@ resource handler, and implement the optional callbacks:
 
 ```elixir
 defmodule HelloPhoenix.HelloResource do
-  use PlugRest.Resource
+  use PhoenixRest.Resource
 
   def to_html(conn, state) do
     {"Hello world", conn, state}
@@ -49,7 +49,7 @@ Add PhoenixRest to your Phoenix project in three steps:
 
     ```elixir
     def deps do
-      [{:phoenix_rest, "~> 0.1.0"}]
+      [{:phoenix_rest, "~> 0.2.0"}]
     end
     ```
 
@@ -71,3 +71,12 @@ Add PhoenixRest to your Phoenix project in three steps:
       end
     end
     ```
+
+## Tasks
+
+You can generate a new PhoenixRest resource (with all of the callbacks
+implemented) by using a Mix task:
+
+```sh
+$ mix phoenix_rest.gen.resource UserResource
+```
