@@ -112,15 +112,11 @@ defmodule PhoenixRest.Router do
 
   ## Examples
 
-      resource "/pages/:page", PageResource, host: "host1.", state: true
+      resource "/pages/:page", PageResource, state: true
 
   ## Options
 
   `resource/3` accepts the following options
-
-    * `:host` - the host which the route should match. Defaults to `nil`,
-      meaning no host match, but can be a string like "example.com" or a
-      string ending with ".", like "subdomain." for a subdomain match.
 
     * `:state` - the initial state of the resource.
 
