@@ -29,7 +29,7 @@ defmodule Mix.Tasks.PhoenixRest.Gen.Resource do
         [_ | _] -> Mix.raise "phoenix_rest.gen.resource expects a single Resource name"
       end
 
-    default_opts = [dir: "web/resources"]
+    default_opts = [dir: "web/resources", use: "PhoenixRest.Resource"]
     opts = Keyword.merge(default_opts, opts)
 
     gen_args = [resource] ++ OptionParser.to_argv(opts)

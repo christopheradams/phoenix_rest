@@ -3,7 +3,7 @@ defmodule PhoenixRest.RouterTest do
   use Plug.Test
 
   defmodule HelloResource do
-    use PlugRest.Resource
+    use PhoenixRest.Resource
 
     def to_html(conn, state) do
       {"Hello world!", conn, state}
@@ -11,7 +11,7 @@ defmodule PhoenixRest.RouterTest do
   end
 
   defmodule MessageResource do
-    use PlugRest.Resource
+    use PhoenixRest.Resource
 
     def to_html(%{params: params} = conn, state) do
       %{"message" => message} = params
