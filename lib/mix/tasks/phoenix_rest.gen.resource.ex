@@ -34,7 +34,7 @@ defmodule Mix.Tasks.PhoenixRest.Gen.Resource do
 
     gen_args = [resource] ++ OptionParser.to_argv(opts)
 
-    Mix.Tasks.PlugRest.Gen.Resource.run(gen_args)
+    Mix.Task.run("plug_rest.gen.resource", gen_args)
   end
 
   @doc """

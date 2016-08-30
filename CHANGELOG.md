@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.2.2-dev
+
+* Bug fixes
+   * Fix dialyzer warning in mix task
+
 ## v0.2.1
 
 * Enhancements
