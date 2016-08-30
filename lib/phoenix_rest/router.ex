@@ -28,7 +28,7 @@ defmodule PhoenixRest.Router do
   `PlugRest.Resource` behaviour by implementing one or more of the callbacks
   which describe the resource.
 
-  See the `PlugRest` documentation for more details about defining a Resource.
+  See `PhoenixRest.Resource` for more details about defining a Resource.
 
   ## Routes
 
