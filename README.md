@@ -10,6 +10,11 @@ PhoenixRest integrates the
 your Phoenix application by making a new `resource` macro available in
 the existing router.
 
+Instead of writing a Phoenix `Controller` and implementing an `action`
+function for each HTTP verb and path, use this library to create a
+`Resource` and define one or more optional callbacks that describe
+your resource's RESTful behavior.
+
 [Documentation for PhoenixRest is available on hexdocs](http://hexdocs.pm/phoenix_rest/).<br/>
 [Source code is available on Github](https://github.com/christopheradams/phoenix_rest).<br/>
 [Package is available on hex](https://hex.pm/packages/phoenix_rest).
@@ -40,6 +45,9 @@ defmodule HelloPhoenix.HelloResource do
 end
 ```
 
+The [docs](https://hexdocs.pm/phoenix_rest/PhoenixRest.Resource.html)
+for `PhoenixRest.Resource` list all of the supported REST callbacks
+and their default values.
 
 ## Installation
 
@@ -80,3 +88,14 @@ implemented) by using a Mix task:
 ```sh
 $ mix phoenix_rest.gen.resource UserResource
 ```
+
+## Upgrading
+
+PhoenixRest is still in an initial development phase. Expect breaking
+changes at least in each minor version.
+
+See the [CHANGELOG](CHANGELOG.md) for more information.
+
+## License
+
+PhoenixRest copyright &copy; 2016, [Christopher Adams](https://github.com/christopheradams)
