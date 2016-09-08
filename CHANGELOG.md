@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.3.1
+
+* Bug fixes
+   * Specify Phoenix version 1.1 or 1.2
+
 ## v0.3.0
 
 * Enhancements
