@@ -57,7 +57,7 @@ Add PhoenixRest to your Phoenix project in three steps:
 
     ```elixir
     def deps do
-      [{:phoenix_rest, "~> 0.2.0"}]
+      [{:phoenix_rest, "~> 0.3.0"}]
     end
     ```
 

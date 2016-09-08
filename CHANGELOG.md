@@ -1,6 +1,9 @@
 # Changelog
 
-## v0.2.2-dev
+## v0.3.0
+
+* Enhancements
+  * `Plug.Debugger` will show errors raised in resources
 
 * Bug fixes
    * Fix dialyzer warning in mix task

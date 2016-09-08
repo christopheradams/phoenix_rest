@@ -1,7 +1,7 @@
 defmodule PhoenixRest.Mixfile do
   use Mix.Project
 
-  @version "0.2.1"
+  @version "0.3.0"
 
   def project do
     [app: :phoenix_rest,
@@ -22,7 +22,7 @@ defmodule PhoenixRest.Mixfile do
 
   defp deps do
     [{:phoenix, ">= 1.1.0"},
-     {:plug_rest, "~> 0.8.0"},
+     {:plug_rest, "~> 0.9.0"},
      {:dialyxir, "~> 0.3.5", only: [:dev]},
      {:ex_doc, ">= 0.0.0", only: :dev}]
   end
