@@ -15,12 +15,9 @@ defmodule PhoenixRest.Resource do
   returns a "text/html" representation of the resource.
 
       defmodule MyApp.UserResource do
+        use PlugRest.Resource
 
-        use PhoenixRest.Resource
-
-        def init(%{params: params} = conn, _state) do
-          username = params["username"]
-          state = %{username: username}
+        def init(conn, state) do
           {:ok, conn, state}
         end
 
@@ -28,9 +25,10 @@ defmodule PhoenixRest.Resource do
           {["GET"], conn, state}
         end
 
-        def resource_exists(conn, %{username: username} = state)
+        def resource_exists(%{params: params} = conn, _state)
+          username = params["username"]
           # Look up user
-          state2 = %{state | name: "John Doe"}
+          state = %{name: "John Doe", username: username}
           {true, conn, state2}
         end
 
@@ -104,6 +102,23 @@ defmodule PhoenixRest.Resource do
 
       conn2 = put_rest_body(conn, "#{conn.method} was successful")
       {true, conn2, state}
+
+  # Configuration
+
+  You can change some defaults by configuring the `:plug_rest` app in
+  your `config.exs` file.
+
+  To change the default `known_methods` for all Resources:
+
+      config :plug_rest,
+        known_methods: ["GET", "HEAD", "OPTIONS", "TRACE"]
+
+  If a Resource implements the `known_methods` callback, that list
+  always takes precedence over the default list.
+
+  Nota bene: if a resource is requested using an HTTP verb that is not
+  in the list of known methods, Phoenix will raise a `NoRouteError`
+  rather than return a `501 Not Implemented` status code.
   """
   @doc false
   defmacro __using__(_) do

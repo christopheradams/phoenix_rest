@@ -13,17 +13,46 @@ defmodule PhoenixRest.RouterTest do
   defmodule MessageResource do
     use PhoenixRest.Resource
 
-    def to_html(%{params: params} = conn, state) do
+    def init(conn, []) do
+      {:ok, conn, "Hello"}
+    end
+
+    def init(conn, greeting) do
+      {:ok, conn, greeting}
+    end
+
+    def to_html(%{params: params} = conn, greeting) do
       %{"message" => message} = params
-      {"Hello #{message}!", conn, state}
+      {"#{greeting} #{message}!", conn, greeting}
+    end
+  end
+
+  defmodule OtherPlug do
+    def init(options) do
+      options
+    end
+
+    def call(conn, options) do
+      send_resp(conn, 200, options)
     end
   end
 
   defmodule RestRouter do
-    use PhoenixRest.Router, known_methods: ["GET", "HEAD", "OPTIONS", "POST", "MOVE"]
+    use PhoenixRest.Router
 
     resource "/hello", HelloResource
     resource "/hello/:message", MessageResource
+    resource "/greeting/:message", MessageResource, "Welcome"
+
+    resource "/plug", OtherPlug, "Hello world"
+  end
+
+  test "GET /plug" do
+    conn = conn(:get, "/plug")
+    conn = RestRouter.call(conn, [])
+
+    assert conn.status == 200
+    assert conn.resp_body == "Hello world"
   end
 
   test "GET /hello" do
@@ -77,5 +106,11 @@ defmodule PhoenixRest.RouterTest do
     conn = conn(:get, "/hello/everyone")
     conn = RestRouter.call(conn, [])
     assert conn.resp_body == "Hello everyone!"
+  end
+
+  test "GET /greeting/:message" do
+    conn = conn(:get, "/greeting/everyone")
+    conn = RestRouter.call(conn, [])
+    assert conn.resp_body == "Welcome everyone!"
   end
 end

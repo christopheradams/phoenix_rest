@@ -23,12 +23,11 @@ defmodule PhoenixRest.Router do
         resource "/pages/:page", PageResource
       end
 
-  The `resource/3` macro accepts a request of format `"/pages/VALUE"` and
-  dispatches it to the `PageResource` module, which must adopt the
-  `PlugRest.Resource` behaviour by implementing one or more of the callbacks
-  which describe the resource.
+  The `resource/4` macro accepts a request of format `"/pages/VALUE"` and
+  and dispatches it to `PageResource`, which must be a Plug module.
 
-  See `PhoenixRest.Resource` for more details about defining a Resource.
+  See `PhoenixRest.Resource` for information on how to write a Plug
+  module that implements REST semantics.
 
   ## Routes
 
@@ -49,43 +48,29 @@ defmodule PhoenixRest.Router do
         %{"name" => name} = params
         {"Hello #{name}!", conn, state}
       end
-
-  ## Options
-
-  The router accepts a list of options:
-
-    * `:known_methods` - custom list of HTTP methods known by your
-      server, for example: `["GET", "HEAD", "OPTIONS", "TRACE"]`
-
-  This option will override the default list of methods that each
-  Resource knows about (GET, HEAD, POST, PUT, PATCH, DELETE, and
-  OPTIONS). If any resource allows custom methods, you must define
-  them using this option. For example:
-
-      use PhoenixRest.Router, known_methods: ["GET", "HEAD", "OPTIONS", "TRACE"]
-
-  Nota bene: if a resource is requested using an HTTP verb that is not
-  in the list of known methods, Phoenix will raise a `NoRouterError`
-  rather than return a `501 Not Implemented` status code.
   """
 
   @known_methods ["GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
 
   @doc false
-  defmacro __using__(options) do
+  defmacro __using__(_options) do
     quote location: :keep do
       use Phoenix.Router
       import PhoenixRest.Router
 
-      unquote(defs(options))
+      unquote(defs())
     end
   end
 
   # Define a function that will be used by the resource macro to
   # generate a match for every resource and known method.
-  @spec defs(Keyword.t) :: Macro.t
-  defp defs(options) do
-    known_methods = Keyword.get(options, :known_methods, @known_methods)
+  @spec defs() :: Macro.t
+  defp defs() do
+    known_methods =
+      case Application.get_env(:plug_rest, :known_methods) do
+        nil -> @known_methods
+        methods -> methods
+      end
 
     quote bind_quoted: [known_methods: known_methods] do
       methods =
@@ -93,10 +78,9 @@ defmodule PhoenixRest.Router do
         |> Enum.map(&String.downcase/1)
         |> Enum.map(&String.to_atom/1)
 
-      var!(add_resource, PhoenixRest.Router) = fn (path, handler, options) ->
-        options = Keyword.put_new(options, :known_methods, known_methods)
+      var!(add_resource, PhoenixRest.Router) = fn (path, plug, plug_opts, options) ->
         for method <- methods do
-          match method, path, handler, options
+          match method, path, plug, plug_opts, options
         end
       end
     end
@@ -107,29 +91,27 @@ defmodule PhoenixRest.Router do
   @doc """
   Main API to define resource routes.
 
-  It accepts an expression representing the path, the name of a module
-  representing the resource, and a list of options.
+  It accepts an expression representing the path, a Plug module, the
+  options for the plug, and options for the macro.
 
   ## Examples
 
-      resource "/pages/:page", PageResource, state: true
+      resource "/path", PlugModule, plug_opts, options
 
   ## Options
 
-  `resource/3` accepts the following options
-
-    * `:state` - the initial state of the resource.
+  `resource/4` accepts the same options as `PhoenixRouter.match/5`
 
   """
-  @spec resource(String.t, atom(), list()) :: Macro.t
-  defmacro resource(path, handler, options \\ []) do
-    add_resource(path, handler, options)
+  @spec resource(String.t, atom(), any(), list()) :: Macro.t
+  defmacro resource(path, plug, plug_opts \\ [], options \\ []) do
+    add_resource(path, plug, plug_opts, options)
   end
 
-  @spec add_resource(String.t, atom(), list()) :: Macro.t
-  defp add_resource(path, handler, options) do
-    quote bind_quoted: [path: path, handler: handler, options: options] do
-      var!(add_resource, PhoenixRest.Router).(path, handler, options)
+  @spec add_resource(String.t, atom(), any(), list()) :: Macro.t
+  defp add_resource(path, plug, plug_opts, options) do
+    quote bind_quoted: [path: path, plug: plug, plug_opts: plug_opts, options: options] do
+      var!(add_resource, PhoenixRest.Router).(path, plug, plug_opts, options)
     end
   end
 end
