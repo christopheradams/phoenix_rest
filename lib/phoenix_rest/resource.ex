@@ -15,7 +15,7 @@ defmodule PhoenixRest.Resource do
   returns a "text/html" representation of the resource.
 
       defmodule MyApp.UserResource do
-        use PlugRest.Resource
+        use PhoenixRest.Resource
 
         def init(conn, state) do
           {:ok, conn, state}
@@ -87,8 +87,8 @@ defmodule PhoenixRest.Resource do
   where `body` is one of:
 
   * `binary()`, which will be sent with `send_resp/3`
-  * `{:chunked, Enum.t}, which will use `send_chunked/2`
-  * `{:file, binary()}, which will use `send_file/3`
+  * `{:chunked, Enum.t}`, which will use `send_chunked/2`
+  * `{:file, binary()}`, which will use `send_file/3`
 
   You can halt the resource handling from any callback and return a manual
   response like so:
@@ -103,7 +103,7 @@ defmodule PhoenixRest.Resource do
       conn2 = put_rest_body(conn, "#{conn.method} was successful")
       {true, conn2, state}
 
-  # Configuration
+  ## Configuration
 
   You can change some defaults by configuring the `:plug_rest` app in
   your `config.exs` file.
@@ -119,6 +119,13 @@ defmodule PhoenixRest.Resource do
   Nota bene: if a resource is requested using an HTTP verb that is not
   in the list of known methods, Phoenix will raise a `NoRouteError`
   rather than return a `501 Not Implemented` status code.
+
+  ## More Information
+
+  The [documentation for
+  PlugRest.Resource](https://hexdocs.pm/plug_rest/PlugRest.Resource.html)
+  has more details.
+
   """
   @doc false
   defmacro __using__(_) do
