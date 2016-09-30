@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.4.1
+* Enhancements
+  * Add documentation to resource template
+
 ## v0.4.0
 
 * Enhancements
