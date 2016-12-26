@@ -92,22 +92,6 @@ defmodule PhoenixRest.RouterTest do
     assert (Plug.Conn.get_resp_header(conn, "allow")) == ["HEAD, GET, OPTIONS"]
   end
 
-  test "MOVE /hello" do
-    conn = conn(:move, "/hello")
-
-    conn = RestRouter.call(conn, [])
-
-    assert conn.status == 405
-  end
-
-  test "PATCH /hello" do
-    conn = conn(:patch, "/hello")
-
-    assert_raise Phoenix.Router.NoRouteError, fn ->
-      RestRouter.call(conn, [])
-    end
-  end
-
   test "GET /hello/:message" do
     conn = conn(:get, "/hello/world")
     conn = RestRouter.call(conn, [])

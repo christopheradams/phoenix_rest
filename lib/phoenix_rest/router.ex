@@ -50,8 +50,6 @@ defmodule PhoenixRest.Router do
       end
   """
 
-  @known_methods ["GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
-
   @doc false
   defmacro __using__(_options) do
     quote location: :keep do
@@ -63,25 +61,12 @@ defmodule PhoenixRest.Router do
   end
 
   # Define a function that will be used by the resource macro to
-  # generate a match for every resource and known method.
+  # generate a router matches for each resource.
   @spec defs() :: Macro.t
   defp defs() do
-    known_methods =
-      case Application.get_env(:plug_rest, :known_methods) do
-        nil -> @known_methods
-        methods -> methods
-      end
-
-    quote bind_quoted: [known_methods: known_methods] do
-      methods =
-        known_methods
-        |> Enum.map(&String.downcase/1)
-        |> Enum.map(&String.to_atom/1)
-
+    quote do
       var!(add_resource, PhoenixRest.Router) = fn (path, plug, plug_opts, options) ->
-        for method <- methods do
-          match method, path, plug, plug_opts, options
-        end
+        match :*, path, plug, plug_opts, options
       end
     end
   end
