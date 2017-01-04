@@ -1,7 +1,7 @@
 defmodule PhoenixRest.Mixfile do
   use Mix.Project
 
-  @version "0.4.2"
+  @version "0.5.0-dev"
 
   def project do
     [app: :phoenix_rest,
@@ -9,7 +9,7 @@ defmodule PhoenixRest.Mixfile do
      elixir: "~> 1.3",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     dialyzer: [plt_add_deps: true],
+     dialyzer: [plt_add_apps: [:mix]],
      docs: [extras: ["README.md"]],
      description: description(),
      package: package(),
@@ -21,9 +21,9 @@ defmodule PhoenixRest.Mixfile do
   end
 
   defp deps do
-    [{:phoenix, "~> 1.1 or ~> 1.2"},
-     {:plug_rest, "~> 0.10"},
-     {:dialyxir, "~> 0.3.5", only: [:dev]},
+    [{:phoenix, "~> 1.2"},
+     {:plug_rest, "~> 0.11"},
+     {:dialyxir, "~> 0.4.0", only: [:dev]},
      {:ex_doc, ">= 0.0.0", only: :dev}]
   end
 
