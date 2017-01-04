@@ -103,23 +103,6 @@ defmodule PhoenixRest.Resource do
       conn2 = put_rest_body(conn, "#{conn.method} was successful")
       {true, conn2, state}
 
-  ## Configuration
-
-  You can change some defaults by configuring the `:plug_rest` app in
-  your `config.exs` file.
-
-  To change the default `known_methods` for all Resources:
-
-      config :plug_rest,
-        known_methods: ["GET", "HEAD", "OPTIONS", "TRACE"]
-
-  If a Resource implements the `known_methods` callback, that list
-  always takes precedence over the default list.
-
-  Nota bene: if a resource is requested using an HTTP verb that is not
-  in the list of known methods, Phoenix will raise a `NoRouteError`
-  rather than return a `501 Not Implemented` status code.
-
   ## More Information
 
   The [documentation for
