@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.4.2
+* Bug Fixes
+  * Phoenix will no longer give 404 errors for not implemented methods.
+
 ## v0.4.1
 * Enhancements
   * Add documentation to resource template
