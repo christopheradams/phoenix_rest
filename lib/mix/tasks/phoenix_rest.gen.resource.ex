@@ -1,7 +1,7 @@
 defmodule Mix.Tasks.PhoenixRest.Gen.Resource do
   use Mix.Task
 
-  @shortdoc "Generates a PlugRest resource for Phoenix"
+  @shortdoc "Generates a PlugRest resource for Phoenix pre 1.3"
 
   @moduledoc """
   Generates a PlugRest resource in your Phoenix application.
