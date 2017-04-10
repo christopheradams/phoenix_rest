@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.5.0
+* Enhancements
+  * Add mix generator task compatible with Phoenix 1.3.0-rc directory structure.
+
 ## v0.4.2
 * Bug Fixes
   * Phoenix will no longer give 404 errors for not implemented methods.
