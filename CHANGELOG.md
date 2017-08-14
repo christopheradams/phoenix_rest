@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.6.0
+* Enhancements
+  * [Generator] Make compatible with Phoenix 1.3.0 directory structure.
+
 ## v0.5.0
 * Enhancements
   * Add mix generator task compatible with Phoenix 1.3.0-rc directory structure.

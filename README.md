@@ -57,7 +57,7 @@ Add PhoenixRest to your Phoenix project in three steps:
 
     ```elixir
     def deps do
-      [{:phoenix_rest, "~> 0.4.0"}]
+      [{:phoenix_rest, "~> 0.6"}]
     end
     ```
 
@@ -86,7 +86,7 @@ You can generate a new PhoenixRest resource (with all of the callbacks
 implemented) by using a Mix task:
 
 ```sh
-$ mix phoenix_rest.gen.resource UserResource
+mix phx_rest.gen.resource UserResource
 ```
 
 ## Upgrading
