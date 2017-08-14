@@ -1,6 +1,4 @@
 defmodule Mix.Tasks.PhxRest.Gen.Resource do
-  use Mix.Task
-
   @shortdoc "Generates a PlugRest resource for Phoenix 1.3"
 
   @moduledoc """
@@ -8,18 +6,31 @@ defmodule Mix.Tasks.PhxRest.Gen.Resource do
 
       mix phx_rest.gen.resource UserResource
 
-  The generated resource will contain:
+  The generator will add the following files to `lib/`:
 
-    * a resource file in web/resources
+    * a resource file in lib/my_app_web/resources/user_resource.ex
 
-  The resource file path can be set with the option:
+  To place the resource under `lib/my_app/web` instead, use the `--path` and
+  `--namespace` options:
 
-      mix phx_rest.gen.resource UserResource --path "lib/my_app/resources"
+      mix phx_rest.gen.resource UserResource --path "lib/my_app/web/resources" --namespace MyApp.Web
+
+  To create a resource with no tutorial comments:
+
+      mix phx_rest.gen.resource UserResource --no-comments
   """
+  use Mix.Task
+
   def run(args) do
     no_umbrella!("phx_rest.gen.resource")
 
-    switches = [dir: :binary, use: :binary]
+    switches = [
+      use: :string,
+      app: :string,
+      path: :string,
+      namespace: :string,
+    ]
+
     {opts, parsed, _} = OptionParser.parse(args, switches: switches)
 
     resource =
@@ -29,18 +40,23 @@ defmodule Mix.Tasks.PhxRest.Gen.Resource do
         [_ | _] -> Mix.raise "phx_rest.gen.resource expects a single Resource name"
       end
 
-    module_name = "Web." <> resource
+    inflections = Mix.Phoenix.inflect(resource)
+    web_module = Keyword.get(inflections, :web_module)
 
-    app_name = Mix.Project.config |> Keyword.get(:app) |> Atom.to_string
+    app_name = Mix.Phoenix.context_app()
 
-    [Mix.Phoenix.base(), module_name]
-    |> Module.concat()
-    |> Mix.Phoenix.check_module_name_availability!()
+    default_opts = [
+      namespace: web_module,
+      path: "./lib/#{app_name}_web/resources",
+      use: "PhoenixRest.Resource"
+    ]
 
-    default_opts = [path: "./lib/#{app_name}/web/resources/#{resource}.ex", use: "PhoenixRest.Resource"]
     opts = Keyword.merge(default_opts, opts)
 
-    gen_args = [module_name] ++ OptionParser.to_argv(opts)
+    module_name = Module.concat([opts[:namespace], resource])
+    Mix.Phoenix.check_module_name_availability!(module_name)
+
+    gen_args = [resource] ++ OptionParser.to_argv(opts)
 
     Mix.Task.run("plug_rest.gen.resource", gen_args)
   end
