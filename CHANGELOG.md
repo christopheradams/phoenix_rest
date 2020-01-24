@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.6.1
+
+* Bug fixes
+  * [Mix] Fix gen.resource task for Elixir 1.9
+
 ## v0.6.0
 * Enhancements
   * [Generator] Make compatible with Phoenix 1.3.0 directory structure.
