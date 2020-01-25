@@ -20,9 +20,9 @@ defmodule Mix.Tasks.PhoenixRest.Gen.Resource do
 
     resource =
       case parsed do
-        [] -> Mix.raise "phoenix_rest.gen.resource expects a Resource name to be given"
+        [] -> Mix.raise("phoenix_rest.gen.resource expects a Resource name to be given")
         [resource] -> resource
-        [_ | _] -> Mix.raise "phoenix_rest.gen.resource expects a single Resource name"
+        [_ | _] -> Mix.raise("phoenix_rest.gen.resource expects a single Resource name")
       end
 
     default_opts = [path: "web/resources", use: "PhoenixRest.Resource"]
@@ -37,8 +37,8 @@ defmodule Mix.Tasks.PhoenixRest.Gen.Resource do
   Raises on umbrella application.
   """
   def no_umbrella!(task) do
-    if Mix.Project.umbrella? do
-      Mix.raise "Cannot run task #{inspect task} from umbrella application"
+    if Mix.Project.umbrella?() do
+      Mix.raise("Cannot run task #{inspect(task)} from umbrella application")
     end
   end
 end

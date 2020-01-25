@@ -28,16 +28,16 @@ defmodule Mix.Tasks.PhxRest.Gen.Resource do
       use: :string,
       app: :string,
       path: :string,
-      namespace: :string,
+      namespace: :string
     ]
 
     {opts, parsed, _} = OptionParser.parse(args, switches: switches)
 
     resource =
       case parsed do
-        [] -> Mix.raise "phx_rest.gen.resource expects a Resource name to be given"
+        [] -> Mix.raise("phx_rest.gen.resource expects a Resource name to be given")
         [resource] -> resource
-        [_ | _] -> Mix.raise "phx_rest.gen.resource expects a single Resource name"
+        [_ | _] -> Mix.raise("phx_rest.gen.resource expects a single Resource name")
       end
 
     inflections = Mix.Phoenix.inflect(resource)
@@ -65,8 +65,8 @@ defmodule Mix.Tasks.PhxRest.Gen.Resource do
   Raises on umbrella application.
   """
   def no_umbrella!(task) do
-    if Mix.Project.umbrella? do
-      Mix.raise "Cannot run task #{inspect task} from umbrella application"
+    if Mix.Project.umbrella?() do
+      Mix.raise("Cannot run task #{inspect(task)} from umbrella application")
     end
   end
 end

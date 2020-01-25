@@ -62,11 +62,11 @@ defmodule PhoenixRest.Router do
 
   # Define a function that will be used by the resource macro to
   # generate a router matches for each resource.
-  @spec defs() :: Macro.t
+  @spec defs() :: Macro.t()
   defp defs() do
     quote do
-      var!(add_resource, PhoenixRest.Router) = fn (path, plug, plug_opts, options) ->
-        match :*, path, plug, plug_opts, options
+      var!(add_resource, PhoenixRest.Router) = fn path, plug, plug_opts, options ->
+        match(:*, path, plug, plug_opts, options)
       end
     end
   end
@@ -88,12 +88,12 @@ defmodule PhoenixRest.Router do
   `resource/4` accepts the same options as `PhoenixRouter.match/5`
 
   """
-  @spec resource(String.t, atom(), any(), list()) :: Macro.t
+  @spec resource(String.t(), atom(), any(), list()) :: Macro.t()
   defmacro resource(path, plug, plug_opts \\ [], options \\ []) do
     add_resource(path, plug, plug_opts, options)
   end
 
-  @spec add_resource(String.t, atom(), any(), list()) :: Macro.t
+  @spec add_resource(String.t(), atom(), any(), list()) :: Macro.t()
   defp add_resource(path, plug, plug_opts, options) do
     quote bind_quoted: [path: path, plug: plug, plug_opts: plug_opts, options: options] do
       var!(add_resource, PhoenixRest.Router).(path, plug, plug_opts, options)

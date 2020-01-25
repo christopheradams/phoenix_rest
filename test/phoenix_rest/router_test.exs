@@ -80,7 +80,7 @@ defmodule PhoenixRest.RouterTest do
     conn = RestRouter.call(conn, [])
 
     assert conn.status == 200
-    assert (Plug.Conn.get_resp_header(conn, "allow")) == ["HEAD, GET, OPTIONS"]
+    assert Plug.Conn.get_resp_header(conn, "allow") == ["HEAD, GET, OPTIONS"]
   end
 
   test "POST /hello" do
@@ -89,7 +89,7 @@ defmodule PhoenixRest.RouterTest do
     conn = RestRouter.call(conn, [])
 
     assert conn.status == 405
-    assert (Plug.Conn.get_resp_header(conn, "allow")) == ["HEAD, GET, OPTIONS"]
+    assert Plug.Conn.get_resp_header(conn, "allow") == ["HEAD, GET, OPTIONS"]
   end
 
   test "GET /hello/:message" do
