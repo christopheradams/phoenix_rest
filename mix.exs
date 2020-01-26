@@ -7,7 +7,7 @@ defmodule PhoenixRest.Mixfile do
     [
       app: :phoenix_rest,
       version: @version,
-      elixir: "~> 1.3",
+      elixir: "~> 1.5",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       dialyzer: [plt_add_apps: [:mix]],
@@ -19,7 +19,9 @@ defmodule PhoenixRest.Mixfile do
   end
 
   def application do
-    [applications: [:phoenix, :plug_rest]]
+    [
+      extra_applications: []
+    ]
   end
 
   defp deps do
