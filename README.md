@@ -51,25 +51,19 @@ and their default values.
 
 ## Installation
 
-Add PhoenixRest to your Phoenix project in three steps:
+Add PhoenixRest to your Phoenix project:
 
   1. Add `:phoenix_rest` to your list of dependencies in `mix.exs`:
 
     ```elixir
     def deps do
-      [{:phoenix_rest, "~> 0.6"}]
+      [
+        {:phoenix_rest, "~> 0.7"}
+      ]
     end
     ```
 
-  2. Ensure `phoenix_rest` is started before your application:
-
-    ```elixir
-    def application do
-      [applications: [:phoenix_rest]]
-    end
-    ```
-
-  3. Edit `web/web.ex` and add the router:
+  2. Edit `web/web.ex` and add the router:
 
     ```elixir
     def router do
