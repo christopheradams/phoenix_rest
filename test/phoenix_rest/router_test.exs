@@ -46,6 +46,7 @@ defmodule PhoenixRest.RouterTest do
   end
 
   defmodule RestRouter do
+    use Phoenix.Router
     use PhoenixRest.Router
 
     resource "/hello", HelloResource

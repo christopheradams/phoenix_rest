@@ -53,7 +53,9 @@ defmodule PhoenixRest.Router do
   @doc false
   defmacro __using__(_options) do
     quote location: :keep do
-      use Phoenix.Router
+      require Phoenix.Router
+
+      import Phoenix.Router
       import PhoenixRest.Router
 
       unquote(defs())
