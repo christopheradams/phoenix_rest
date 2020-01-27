@@ -56,6 +56,8 @@ defmodule PhoenixRest.RouterTest do
     resource "/options", OptionsResource, [], assigns: %{msg: "Hello world"}
 
     resource "/plug", OtherPlug, "Hello world"
+
+    match :*, "/match", HelloResource, []
   end
 
   test "GET /plug" do
@@ -115,5 +117,23 @@ defmodule PhoenixRest.RouterTest do
 
     assert conn.status == 200
     assert conn.resp_body == "Hello world"
+  end
+
+  test "GET /match" do
+    conn = conn(:get, "/match")
+
+    conn = RestRouter.call(conn, [])
+
+    assert conn.status == 200
+    assert conn.resp_body == "Hello world!"
+  end
+
+  test "OPTIONS /match" do
+    conn = conn(:options, "/hello")
+
+    conn = RestRouter.call(conn, [])
+
+    assert conn.status == 200
+    assert Plug.Conn.get_resp_header(conn, "allow") == ["HEAD, GET, OPTIONS"]
   end
 end
