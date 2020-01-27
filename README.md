@@ -21,26 +21,27 @@ your resource's RESTful behavior.
 
 ## Hello World
 
-Add a new route to your router to match a path with a resource
-handler:
+Let's assume you've created a new Phoenix site with `mix phx.new hello`.
+
+Add a new route to your `router.ex` to match a path with a resource handler:
 
 ```elixir
-defmodule HelloPhoenix.Router do
-  use HelloPhoenix.Web, :router
+defmodule HelloWeb.Router do
+  use HelloWeb, :router
 
-  resource "/hello", HelloPhoenix.HelloResource
+  resource "/hello", HelloWeb.HelloResource
 end
 ```
 
-Create a resource at `web/resources/hello_resource.ex` defining the
+Create a resource at `lib/hello_web/resources/hello_resource.ex` defining the
 resource handler, and implement the optional callbacks:
 
 ```elixir
-defmodule HelloPhoenix.HelloResource do
+defmodule HelloWeb.HelloResource do
   use PhoenixRest.Resource
 
   def to_html(conn, state) do
-    {"Hello world", conn, state}
+    {"Hello world!", conn, state}
   end
 end
 ```
@@ -56,20 +57,23 @@ Add PhoenixRest to your Phoenix project:
   1. Add `:phoenix_rest` to your list of dependencies in `mix.exs`:
 
     ```elixir
-    def deps do
+    defp deps do
       [
         {:phoenix_rest, "~> 0.6"}
       ]
     end
     ```
 
-  2. Edit `web/web.ex` and add the router:
+  2. Edit `hello_web.ex` and add `PhoenixRest.Router`:
 
     ```elixir
     def router do
       quote do
         use Phoenix.Router
         use PhoenixRest.Router
+
+        import Plug.Conn
+        import Phoenix.Controller
       end
     end
     ```
@@ -80,7 +84,7 @@ You can generate a new PhoenixRest resource (with all of the callbacks
 implemented) by using a Mix task:
 
 ```sh
-mix phx_rest.gen.resource UserResource
+mix phx_rest.gen.resource HelloResource
 ```
 
 ## Upgrading

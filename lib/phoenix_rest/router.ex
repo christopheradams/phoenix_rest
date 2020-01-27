@@ -11,14 +11,17 @@ defmodule PhoenixRest.Router do
         quote do
           use Phoenix.Router
           use PhoenixRest.Router
+
+          import Plug.Conn
+          import Phoenix.Controller
         end
       end
 
   Then use the `resource` macro in your router to match a path with a
   resource handler:
 
-      defmodule MyApp.Router do
-        use HelloPhoenix.Web, :router
+      defmodule MyAppWeb.Router do
+        use MyAppWeb, :router
 
         resource "/pages/:page", PageResource
       end
