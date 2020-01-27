@@ -1,5 +1,10 @@
 # Changelog
 
+## v0.7.0
+
+* Enhancements
+  * [Phoenix] Support v1.4.
+
 ## v0.6.1
 
 * Bug fixes

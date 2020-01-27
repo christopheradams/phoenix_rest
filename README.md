@@ -59,7 +59,7 @@ Add PhoenixRest to your Phoenix project:
     ```elixir
     defp deps do
       [
-        {:phoenix_rest, "~> 0.6"}
+        {:phoenix_rest, "~> 0.7"}
       ]
     end
     ```
