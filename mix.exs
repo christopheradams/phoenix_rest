@@ -26,7 +26,8 @@ defmodule PhoenixRest.Mixfile do
 
   defp deps do
     [
-      {:phoenix, "~> 1.3.0"},
+      {:phoenix, "~> 1.3 or ~> 1.4"},
+      {:plug_cowboy, "~> 1.0 or ~> 2.0", optional: true},
       {:poison, "~> 2.2 or ~> 3.0", optional: true},
       {:plug_rest, "~> 0.14"},
       {:dialyxir, "~> 0.5.0", only: [:dev]},
